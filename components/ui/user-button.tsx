@@ -1,12 +1,10 @@
 "use client";
 
-import { signOut } from "next-auth/react";
 import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { User } from "@prisma/client";
 
 interface UserButtonProps {
-  currentUser: User
+  currentUser: unknown
 }
 
 
@@ -36,7 +34,6 @@ export const UserButton: React.FC<UserButtonProps> = ({ currentUser }) => {
         <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
           <div className="py-1">
             <button
-              onClick={() => signOut()}
               className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
             >
               Logout

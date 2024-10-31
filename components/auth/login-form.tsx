@@ -17,8 +17,8 @@ import {
 } from "@/components/ui/form";
 import { CardWrapper } from "@/components/auth/card-wrapper";
 import { Button } from "@/components/ui/button";
-import axios from "axios";
 import { useRouter } from "next/navigation";
+import { login } from "@/actions/login";
 
 export const LoginForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -34,17 +34,18 @@ export const LoginForm = () => {
 
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     startTransition(async () => {
-      await axios
-        .post(`${process.env.NEXT_PUBLIC_API}/api/customer/auth/login`, {
-          ...values
-        })
-        .then((data) => {
+      // await axios
+      //   .post(`${process.env.NEXT_PUBLIC_API}/api/customer/auth/login`, {
+      //     ...values
+      //   })
+      await login(values)
+        .then(async (data) => {
           if (data?.error) {
             form.reset();
             toast.error(data?.error);
           } else {
             toast.success("Logged in successfully!");
-            router.push("/")
+            router.push("/");
           }
         })
         .catch((data) => {
