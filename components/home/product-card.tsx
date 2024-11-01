@@ -1,23 +1,31 @@
-'use client'
+"use client";
 
-import { Product } from '@/types'
-import { ShoppingCart } from 'lucide-react'
-import Image from 'next/image'
-import { useRouter } from 'next/navigation'
-import { IconButton } from '../ui/icon-button'
-import { Currency } from '../ui/currency'
+import { Product } from "@/types";
+import { ShoppingCart } from "lucide-react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { IconButton } from "../ui/icon-button";
+import { Currency } from "../ui/currency";
+import { MouseEventHandler } from "react";
+import { useCart } from "@/hooks/use-cart";
 
 interface ProductCard {
-  data: Product
+  data: Product;
 }
 
 export const ProductCard: React.FC<ProductCard> = ({ data }) => {
-  const router = useRouter()
+  const router = useRouter();
+  const cart = useCart();
 
   const handleClick = () => {
-    router.push(`/product/${data.id}`)
-  }
+    router.push(`/product/${data.id}`);
+  };
 
+  const onAddToCart: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.stopPropagation();
+
+    cart.addItem(data);
+  };
 
   return (
     <div
@@ -35,6 +43,7 @@ export const ProductCard: React.FC<ProductCard> = ({ data }) => {
         <div className="opacity-0 group-hover:opacity-100 transition absolute w-full px-6 bottom-5">
           <div className="flex gap-x-6 justify-center">
             <IconButton
+              onClick={onAddToCart}
               icon={<ShoppingCart size={24} className="text-gray-600" />}
             />
           </div>
@@ -49,5 +58,5 @@ export const ProductCard: React.FC<ProductCard> = ({ data }) => {
         <Currency value={data.price} />
       </div>
     </div>
-  )
-}
+  );
+};

@@ -5,6 +5,7 @@ import { ShoppingBag } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { UserButton } from "./ui/user-button";
+import { useCart } from "@/hooks/use-cart";
 
 interface NavbarActionsprops {
   customerData: unknown;
@@ -12,6 +13,7 @@ interface NavbarActionsprops {
 export const NavbarActions = ({ customerData }: NavbarActionsprops) => {
   const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
+  const cart = useCart();
 
   useEffect(() => {
     setIsMounted(true);
@@ -28,9 +30,11 @@ export const NavbarActions = ({ customerData }: NavbarActionsprops) => {
             onClick={() => router.push("/cart")}
           >
             <ShoppingBag size={20} color="white" />
-            <span className="ml-2 text-sm font-medium text-white">0</span>
+            <span className="ml-2 text-sm font-medium text-white">
+              {cart.items.length}
+            </span>
           </Button>
-          <UserButton currentUser={customerData}/>
+          <UserButton currentUser={customerData} />
         </>
       ) : (
         <Button
