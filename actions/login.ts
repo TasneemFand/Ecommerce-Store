@@ -1,4 +1,3 @@
-// store-app/utils/fetchCustomer.js
 'use server'
 import axios from "axios";
 import { cookies } from "next/headers";
@@ -20,8 +19,9 @@ export async function login(values) {
       path: "/",
       maxAge: 60 * 60 * 24, // 1 day expiration
     });
+    return res.data;
   } catch (error) {
     console.error("Error fetching current customer:", error);
-    return null;
+    throw new Error(error.response?.data?.error || "Error logging in");
   }
 }

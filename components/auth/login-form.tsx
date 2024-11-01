@@ -48,8 +48,9 @@ export const LoginForm = () => {
             router.push("/");
           }
         })
-        .catch((data) => {
-          toast.error(data.error || "error");
+        .catch((error) => {
+          console.error(error);
+          toast.error(error.message || "An error occurred while logging in");
         });
     });
   };
