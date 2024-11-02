@@ -2,12 +2,20 @@ import { getProducts } from "@/actions/get-products";
 import { fetchCurrentCustomer } from "@/actions/getCurrentCustomer";
 import { ProductList } from "@/components/home/product-list";
 import { Container } from "@/components/ui/container";
+import { redirect } from "next/navigation";
 
-export const revalidate = 0
+export const revalidate = 0;
 
 export default async function Home() {
   const currentCustomer = await fetchCurrentCustomer();
-  const products = await getProducts({ isFeatured: true, storeId: currentCustomer?.store?.id ?? "13787ec5-d05d-4f50-99f0-d8ceb68185e4" })
+  if (!currentCustomer) {
+    redirect("/sign-in");
+  }
+  const products = await getProducts({
+    isFeatured: true,
+    storeId:
+      currentCustomer?.store?.id ?? "deb85229-40e2-4ee2-9817-c5b021d3a7bc",
+  });
 
   return (
     <Container>

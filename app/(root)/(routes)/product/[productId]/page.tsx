@@ -1,17 +1,16 @@
-import { getProduct } from '@/actions/get-product'
-import { Container } from '@/components/ui/container'
-import { Gallery } from '../components/gallery'
-import { Info } from '../components/info'
+import { getProduct } from "@/actions/get-product";
+import { Container } from "@/components/ui/container";
+import { Gallery } from "../components/gallery";
+import { Info } from "../components/info";
 
 interface ProductPageProps {
-  params: {
-    productId: string
-  }
+  params: Promise<{ productId: string }>;
 }
 
 const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
-  const product = await getProduct(params.productId)
+  const productId = (await params).productId;
 
+  const product = await getProduct(productId);
 
   return (
     <div className="bg-white">
@@ -28,7 +27,7 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
         </div>
       </Container>
     </div>
-  )
-}
+  );
+};
 
-export default ProductPage
+export default ProductPage;

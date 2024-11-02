@@ -19,7 +19,7 @@ export const Summary = () => {
       const currentCustomer = await fetchCurrentCustomer();
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API}/api/${
-          currentCustomer?.store?.id ?? "13787ec5-d05d-4f50-99f0-d8ceb68185e4"
+          currentCustomer?.store?.id ?? "deb85229-40e2-4ee2-9817-c5b021d3a7bcs"
         }/checkout`,
         {
           productIds: items.map((item) => item.id),
